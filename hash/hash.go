@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-// String - transform string into hash
-func String(input string) string {
+// EncryptString - transform string into hash
+func EncryptString(input string) string {
 	val := []byte(input)
 	h := sha1.New()
 	h.Write(val)

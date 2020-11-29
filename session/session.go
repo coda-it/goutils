@@ -8,7 +8,7 @@ import (
 
 // CreateSessionID - creates a new session ID
 func CreateSessionID(user string, pass string, time string) string {
-	return hash.String(user + pass + time)
+	return hash.EncryptString(user + pass + time)
 }
 
 // GetSessionID - get user session ID
