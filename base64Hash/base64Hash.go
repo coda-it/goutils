@@ -1,4 +1,4 @@
-package shortHash
+package base64Hash
 
 import (
 	"crypto/rand"
@@ -7,7 +7,7 @@ import (
 	"math"
 )
 
-func GenerateShortHash(length int) (string, error) {
+func GenerateBase64Hash(length int) (string, error) {
 	if length%4 != 0 {
 		return "", errors.New("length should be multiple of 4")
 	}
