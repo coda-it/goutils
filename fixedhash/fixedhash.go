@@ -1,4 +1,4 @@
-package base64Hash
+package fixedhash
 
 import (
 	"crypto/rand"
@@ -7,7 +7,7 @@ import (
 	"math"
 )
 
-func GenerateBase64Hash(length int) (string, error) {
+func FixedHash(length int) (string, error) {
 	if length%4 != 0 {
 		return "", errors.New("length should be multiple of 4")
 	}
