@@ -22,5 +22,5 @@ func FixedHash(length int) (string, error) {
 		return "", err
 	}
 
-	return base64.StdEncoding.EncodeToString(hashSource), nil
+	return base64.URLEncoding.EncodeToString(hashSource), nil
 }
