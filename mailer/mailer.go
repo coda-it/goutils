@@ -49,7 +49,7 @@ func (m *Mailer) SendEmail(body string, recipient string) {
 	msg := composeMessage(m.Sender, recipient, body)
 	smtpAuth := smtp.PlainAuth("", m.Sender, m.Password, m.SMTPAuthURL)
 
-	err := smtp.SendMail(m.SMTPPort, smtpAuth, m.Sender, []string{recipient}, []byte(msg))
+	err := smtp.SendMail(m.SMTPAuthURL+":"+m.SMTPPort, smtpAuth, m.Sender, []string{recipient}, []byte(msg))
 
 	if err != nil {
 		logger.Log("error sending email to "+recipient, err)
