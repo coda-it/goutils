@@ -37,31 +37,31 @@ func (m *Mailer) AddRecipient(email string) {
 	m.recipients = append(m.recipients, email)
 }
 
-func composeMessage(from string, to string, body string) string {
+func composeMessage(from string, to string, subject string, body string) string {
 	return "From: " + from + "\n" +
 		"To: " + to + "\n" +
-		"Subject: Home alert\n\n" +
+		"Subject: " + subject + "\n\n" +
 		body
 }
 
 // SendEmail - send email to subscriber
-func (m *Mailer) SendEmail(body string, recipient string) {
-	msg := composeMessage(m.Sender, recipient, body)
+func (m *Mailer) SendEmail(subject string, body string, recipient string) {
+	msg := composeMessage(m.Sender, recipient, subject, body)
 	smtpAuth := smtp.PlainAuth("", m.Sender, m.Password, m.SMTPAuthURL)
 
 	err := smtp.SendMail(m.SMTPAuthURL+":"+m.SMTPPort, smtpAuth, m.Sender, []string{recipient}, []byte(msg))
 
 	if err != nil {
-		logger.Log("error sending email to "+recipient, err)
+		logger.Log("error sending email to " + recipient + ": " + err.Error())
 		return
 	}
 
-	logger.Log("alert sent to " + recipient)
+	logger.Log("email sent to " + recipient)
 }
 
-// BulkEmail - sends alerts to all home users
-func (m *Mailer) BulkEmail(body string) {
+// BulkEmail - sends email to all users
+func (m *Mailer) BulkEmail(subject string, body string) {
 	for _, r := range m.recipients {
-		m.SendEmail(body, r)
+		m.SendEmail(subject, body, r)
 	}
 }
