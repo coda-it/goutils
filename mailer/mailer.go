@@ -8,8 +8,8 @@ import (
 // IMailer - interface for mailer
 type IMailer interface {
 	AddRecipient(string)
-	SendEmail(string, string)
-	BulkEmail(string)
+	SendEmail(string, string, string)
+	BulkEmail(string, string)
 }
 
 // Mailer - email notifier
