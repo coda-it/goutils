@@ -15,6 +15,7 @@ type IMailer interface {
 // Mailer - email notifier
 type Mailer struct {
 	Sender      string
+	Username    string
 	Password    string
 	SMTPPort    string
 	SMTPAuthURL string
@@ -22,9 +23,10 @@ type Mailer struct {
 }
 
 // New - creates new instance of Mailer
-func New(recipients []string, sender string, password string, SMTPPort string, SMTPAuthURL string) *Mailer {
+func New(recipients []string, sender string, username string, password string, SMTPPort string, SMTPAuthURL string) *Mailer {
 	return &Mailer{
 		Sender:      sender,
+		Username:    username,
 		Password:    password,
 		SMTPPort:    SMTPPort,
 		SMTPAuthURL: SMTPAuthURL,
@@ -47,7 +49,7 @@ func composeMessage(from string, to string, subject string, body string) string 
 // SendEmail - send email to subscriber
 func (m *Mailer) SendEmail(subject string, body string, recipient string) {
 	msg := composeMessage(m.Sender, recipient, subject, body)
-	smtpAuth := smtp.PlainAuth("", m.Sender, m.Password, m.SMTPAuthURL)
+	smtpAuth := smtp.PlainAuth("", m.Username, m.Password, m.SMTPAuthURL)
 
 	err := smtp.SendMail(m.SMTPAuthURL+":"+m.SMTPPort, smtpAuth, m.Sender, []string{recipient}, []byte(msg))
 
